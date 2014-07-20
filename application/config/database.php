@@ -44,7 +44,7 @@ $db['default']['hostname'] = 'taihehksite.db.7900835.hostedresource.com';
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'taihehksite.db.7900835.hostedresource.com';
+/*$db['default']['hostname'] = 'taihehksite.db.7900835.hostedresource.com';
 $db['default']['username'] = 'taihehksite';
 $db['default']['password'] = 'Taihe_2011';
 $db['default']['database'] = 'taihehksite';
@@ -58,10 +58,10 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['default']['stricton'] = FALSE;*/
 
 
-/*$db['default']['hostname'] = 'localhost';
+$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'taihe';
 $db['default']['password'] = 'taihe';
 $db['default']['database'] = 'taihe';
@@ -75,7 +75,7 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;*/
+$db['default']['stricton'] = FALSE;
 
 
 
