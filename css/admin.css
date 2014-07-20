@@ -1,0 +1,148 @@
+@charset "utf-8";
+
+/* compatible html5 in ie 6, 7 */
+header, nav, footer, article, caption{
+    display:block;
+}
+
+body, input {
+    font-family: Arial, Arial Unicode MS, SANS-SERIF;
+}
+
+body {
+    min-width: 810px;
+}
+
+#login-title {
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px;
+}
+
+#sub-title {
+    font-size: 18px;
+    text-align: center;
+    line-height: 30px;
+}
+
+#login-frame {
+    width: 400px;
+    height: 160px;
+    margin: auto;
+    color: #fff;
+    background: #b3c5c4;
+}
+
+#login-frame table {
+    width: 320px;
+    margin: 40px;
+}
+
+#login-frame input.input {
+    width:200px;
+}
+
+#nav {
+    background-color: #b3c5c4;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px 0 30px 30px;
+    border-right: 1px solid #ddd;
+    box-shadow: 0 0 20px #ccc;
+    -webkit-box-shadow: 0 0 20px #ccc;
+    -moz-box-shadow: 0 0 20px #ccc;
+}
+
+#nav ul.menu {
+    margin: 0px;
+    padding: 5px 0 10px 10px;
+    list-style-type: none;
+}
+
+#nav ul.menu li a {
+    color: #fff;
+    text-decoration: none;
+    line-height: 24px;
+}
+
+#nav ul.menu li a:hover {
+    text-decoration: underline;
+}
+
+#nav ul.menu li.select a {
+    cursor: default;
+    color: #999;
+}
+
+#nav ul.menu li.select a:hover {
+    text-decoration: none;
+}
+
+#main-port {
+    position: relative;
+    width: 750px;
+    margin: 20px 0 50px 260px;
+}
+
+#main-port .admin-news input {
+    width:80%;
+}
+
+#main-port .admin-news textarea {
+    width: 80%;
+    height: 300px;
+    resize: none;
+}
+
+#main-port table {
+    width: 100%;
+}
+
+#main-port table table {
+    text-align: center;
+}
+
+#main-port form {
+    font-size: 12px;
+}
+
+#main-port form input, #main-port form textarea {
+    resize: none;
+    width: 80%;
+}
+
+#display-large-image {
+    display: none;
+    width: 500px;
+    height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#display-small-image, #display-cover-image {
+    display: none;
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#main-port .admin-product .spec, #main-port .admin-product .spec input {
+    margin: 0;
+    padding: 0;
+}
+
+#main-port .admin-product .no, #main-port .admin-product .no input {
+    width: 70px;
+}
+
+#main-port .admin-product .size, #main-port .admin-product .size input {
+    width: 140px;
+}
+
+#main-port .admin-product .min, #main-port .admin-product .min input {
+    width: 30px;
+}

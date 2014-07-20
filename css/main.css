@@ -1,0 +1,508 @@
+@charset "utf-8";
+
+/* compatible html5 in ie 6, 7 */
+header, nav, footer, article, caption{
+    display:block;
+}
+
+body {
+    min-height: 750px;
+    min-width: 1024px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, SANS-SERIF, "微软雅黑";
+    background: #000;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #ddd;
+}
+
+h3, h4, h5 {
+    font-weight: normal;
+}
+
+.clear {
+    clear:both;
+}
+
+header {
+    margin: 0;
+    height: 5px;
+    background: #007a76;
+}
+
+header.index {
+    margin: 0;
+    height: 500px;
+    background: #fff;
+    position: relative;
+}
+
+#myImageFlow_navigation {
+    display: none;
+}
+
+.taihe-logo {
+    padding: 10px;
+    width: 112px;
+    height: 100px;
+    background: url('../img/taihe-logo.png') no-repeat;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#main {
+    min-height: 550px;
+    position: relative;
+    color: #ddd;
+    background: url('../img/main-bg.png') repeat-x;
+}
+
+#main.index {
+    min-height: 350px;
+    background: url('../img/index-main-bg.png') repeat-x;
+}
+
+#main-wrap {
+    width: 1024px;
+    margin: auto;
+}
+
+#main nav ul {
+    margin: 0 0 0 90px;
+    padding: 0;
+    list-style: none;
+}
+
+#main.index nav ul {
+    padding: 2px 0 0;
+}
+
+#main nav ul li {
+    width: 80px;
+    float: left;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#main nav ul a{
+    color: #ddd;
+    text-decoration: none;
+}
+
+#main.index nav ul li {
+    font-size: 18px;
+}
+
+#main nav ul li:hover {
+    cursor: pointer;
+    color: #fff;
+    text-shadow: 0 0 3px white;
+    background-color: #11484e;
+}
+
+#main nav ul li.selected {
+    color: #fff;
+    text-shadow: 0 0 3px white;
+    background-color: #007a76;
+}
+
+.news-list {
+    clear: both;
+    margin: 20px 0 0 90px;
+    width: 500px;
+}
+
+.news-list ul {
+    margin: 0;
+    padding: 0 0 0 30px;
+    list-style: square;
+}
+
+.news-list ul a {
+    text-decoration: none;
+    color: #ddd;
+}
+
+.news-list li {
+    line-height: 26px;
+    font-size: 14px;
+}
+
+.news-list li:hover {
+    color: #fff;
+    text-shadow: 0 0 3px white;
+    text-decoration: underline\9;
+}
+
+.news-list .tag {
+    padding: 2px 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 3px white;
+    background: #007a76;
+}
+
+.news-list .tag:hover {
+}
+
+.lang-panel {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.lang-panel a {
+    color: #ddd;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+.lang-panel a:hover {
+    color: #fff;
+}
+
+.page, .product-list, .single-product, .news-list, .contact-list {
+    margin: 40px auto auto;
+    width: 750px;
+}
+
+.page h3, .page h5 {
+    text-align: center;
+}
+
+.page h5 {
+    margin: -5px auto 40px;
+    padding: 0;
+}
+
+.page p {
+    line-height: 22px;
+    color: #eee;
+    font-size: 14px;
+    text-indent: 2em;
+}
+
+.site-trace {
+    margin: 10px auto auto 15px;
+    padding-bottom: 10px;
+    height: 28px;
+}
+
+.site-trace a {
+    text-decoration: none;
+    color: #ddd;
+}
+
+.trace {
+    display: block;
+    float: left;
+    height: 18px;
+    margin-right: 5px;
+    padding: 5px 10px;
+    line-height: 18px;
+    font-size: 14px;
+    background-color: #007a76;
+    border-left: #ddd solid 3px;
+    opacity: 0.3;
+    filter: alpha( opacity = 30 );
+    cursor: pointer;
+}
+
+.trace:hover {
+    text-shadow: 0 0 3px white;
+    opacity: 1;
+    filter: alpha( opacity = 100 );
+}
+
+.last {
+    text-shadow: 0 0 3px white;
+    opacity: 1.0;
+    filter: alpha( opacity = 100 );
+}
+
+.product {
+    width: 214px;
+    height: 234px;
+    margin: 18px 10px;
+    float: left;
+    cursor: pointer;
+}
+
+.product-list {
+    position: relative;
+}
+
+.product-list a {
+    text-decoration: none;
+    text-align: center;
+}
+
+.product-list .error-msg {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.product-list .paging {
+    margin: 10px 0 0;
+    text-align: center;
+}
+
+.product-list .paging a {
+    font-weight: bold;
+    color: #fff;
+    font-size: 16px;
+}
+
+.product-list .paging a.enable {
+    font-weight: normal;
+    font-size: 12px;
+}
+
+.product-list .paging a.enable:hover {
+    text-decoration: underline;
+}
+
+.product-list .prev-page {
+    position: absolute;
+    left: -50px;
+    top: 0;
+    height: 100%;
+    width: 30px;
+}
+
+.product-list .next-page {
+    position: absolute;
+    right: -10px;
+    top: 0;
+    height: 100%;
+    width: 30px;
+}
+
+.product-list .button {
+    display: block;
+    margin-top: 200px;
+    width: 21px;
+    height: 118px;
+    opacity: 0.3;
+    filter: alpha( opacity = 30 );
+    cursor: pointer;
+}
+
+.product-list .button:hover {
+    opacity: 0.8;
+    filter: alpha( opacity = 80 );
+}
+
+.product-list .prev-page .button {
+    background: url(../img/prev-page.png) center no-repeat;
+}
+
+.product-list .next-page .button {
+    background: url(../img/next-page.png) center no-repeat;
+}
+
+.product:hover h4 {
+    color: #fff;
+    text-shadow: 0 0 3px white;
+}
+
+.product:hover .product-img {
+    width: 205px;
+    height: 205px;
+    border-color: #ffc34e;
+}
+
+.product:hover .product-img-mash {
+    width: 205px;
+    height: 205px;
+    opacity: 0;
+    filter: alpha( opacity = 0 );
+}
+
+.product h4{
+    margin: 5px;
+}
+
+.product-img {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border-bottom: #007a76 solid 5px;
+    position: relative;
+}
+
+.product-img-mash {
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    background-color: #000;
+    opacity: 0.3;
+    filter: alpha( opacity = 30 );
+    position:absolute;
+}
+
+.product-img-large {
+    margin-top: 50px;
+    width: 500px;
+    height: 500px;
+    float: left;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+
+.product-detail {
+    margin-top: 50px;
+    width: 230px;
+    float:right;
+}
+
+.description thead {
+    text-align: left;
+    font-size: 16px;
+}
+
+.description th {
+    padding-left: 9px;
+    text-align: right;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.description td {
+    padding-left: 9px;
+    font-size: 11px;
+    text-shadow: 0 0 3px white;
+}
+
+.specification {
+    margin-top: 50px;
+}
+
+.specification table {
+    width: 100%;
+}
+
+.specification thead {
+    text-align: left;
+    font-size: 16px;
+}
+
+.specification th, .specification td {
+    text-align: center;
+    font-size: 11px;
+}
+
+.odd {
+    background-color: #007a76;
+}
+
+.contact {
+    margin-bottom: 20px;
+}
+
+.contact .thead {
+    margin-bottom: 5px;
+    text-align: left;
+    text-shadow: 0 0 3px white;
+    text-decoration: underline\9;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.contact th {
+    padding-left: 10px;
+    text-align: right;
+    font-size: 14px;
+}
+
+.contact td {
+    padding-left: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+footer {
+    padding-top: 30px;
+    color: #bbb;
+    font-size: 10px;
+    text-align: center;
+}
+
+footer p {
+    margin: 5px auto;
+    padding: 0;
+}
+
+.ad-people {
+    width: 317px;
+    height: 400px;
+    background: url('../img/index-people.png');
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+/* slider */
+
+#s3slider {
+    width: 720px; /* important to be same as image width */
+    height: 300px; /* important to be same as image height */
+    margin: auto;
+    position: relative; /* important */
+    top: 100px;
+    overflow: hidden; /* important */
+}
+
+#s3slider ul {
+    padding: 0;
+    margin: 0;
+}
+
+#s3sliderContent {
+    width: 400px; /* important to be same as image width or wider */
+    position: absolute; /* important */
+    top: 0; /* important */
+    margin-left: 0; /* important */
+}
+
+.s3sliderImage {
+    float: left; /* important */
+    position: relative; /* important */
+    display: none; /* important */
+}
+
+.s3sliderImage span {
+    position: absolute; /* important */
+    left: 0;
+    font: 10px/15px Arial, Helvetica, sans-serif;
+    padding: 10px 13px;
+    width: 374px;
+    background-color: #000;
+    filter: alpha(opacity=70); /* here you can set the opacity of box with text */
+    -moz-opacity: 0.7; /* here you can set the opacity of box with text */
+    -khtml-opacity: 0.7; /* here you can set the opacity of box with text */
+    opacity: 0.7; /* here you can set the opacity of box with text */
+    color: #fff;
+    display: none; /* important */
+    top: 0;
+
+    /*
+       if you put
+       top: 0; -> the box with text will be shown at the top of the image
+       if you put
+       bottom: 0; -> the box with text will be shown at the bottom of the image
+    */
+}
+
+.clear {
+    clear: both;
+}
