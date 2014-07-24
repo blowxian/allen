@@ -9,37 +9,48 @@
 
 class AdminDev extends CI_Controller
 {
-    public function test()
-    {
-        $this->load->helper(array('url'));
-
-        $this->load->view('v2/admin/manage-news');
-    }
-
     public function index()
     {
         $this->load->helper(array('form', 'url', 'html'));
 
         if ($this->isLogin()) {
-            redirect('admin/home/');
+            redirect(base_url().'adminDev/manage_home');
         }
 
         $this->load->view('login');
     }
 
+    public function manage_home() {
+        // redirect to Login if not login
+        $this->redirectToLogin();
+
+        $this->load->helper(array('url'));
+
+        $this->load->view('v2/admin/manage-home');
+    }
+
     public function manage_news() {
+        // redirect to Login if not login
+        $this->redirectToLogin();
+
         $this->load->helper(array('url'));
 
         $this->load->view('v2/admin/manage-news');
     }
 
     public function manage_category() {
+        // redirect to Login if not login
+        $this->redirectToLogin();
+
         $this->load->helper(array('url'));
 
         $this->load->view('v2/admin/manage-category');
     }
 
     public function manage_product() {
+        // redirect to Login if not login
+        $this->redirectToLogin();
+
         $this->load->helper(array('url'));
 
         $this->load->view('v2/admin/manage-product');
@@ -526,10 +537,9 @@ class AdminDev extends CI_Controller
     // if not login, redirect login page
     private function redirectToLogin()
     {
-        echo base_url().'admin/';
-//        if (!$this->isLogin()) {
-//            redirect('admin/');
-//        }
+        if( !$this->isLogin() ) {
+            redirect( base_url().'admin/' );
+        }
     }
 
     // check is login

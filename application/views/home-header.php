@@ -22,7 +22,7 @@
     <header class="index">
 
         <div id="myImageFlow" class="imageflow" style="width: 1024px; margin: auto;">
-			<img src="img/hk.jpg" longdesc="img/hk.jpg" width="415" height="322" alt="Hong Kong Distribution" />
+			<img src="img/hk.2.jpg" longdesc="img/hk.2.jpg" width="415" height="322" alt="Hong Kong Distribution" />
 			<img src="img/ywth.jpg" longdesc="img/ywth.jpg" width="400" height="300" alt="Yiwu Head Office" />
             <img src="img/db.jpg" longdesc="img/db.jpg" width="800" height="552" alt="Dubai Distribution" />
 			<img src="img/hkth.jpg" longdesc="img/hkth.jpg" width="800" height="600" alt="Company" />

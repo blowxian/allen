@@ -42,7 +42,7 @@
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="../getting-started">网站整体</a>
+                    <a href="<?= base_url() ?>adminDev/manage_home">网站整体</a>
                 </li>
                 <li>
                     <a href="<?= base_url() ?>adminDev/manage_news">新闻管理</a>
@@ -51,7 +51,7 @@
                     <a href="<?= base_url() ?>adminDev/manage_category">类目管理</a>
                 </li>
                 <li class="active">
-                    <a href="../javascript">产品管理</a>
+                    <a href="#">产品管理</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

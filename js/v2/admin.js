@@ -45,6 +45,73 @@ $(document).ready(function() {
         };
     })();
 
+    window.manageHome = {
+        cache: {
+            lang: 'en'
+        },
+        conf: {
+            menuList: {
+                'viewSite': {
+                    dom: 'view-site',
+                    name: '查看整站统计',
+                    func: function() {
+                    }
+                },
+                'manageHomePic': {
+                    dom: 'manage-home-pic',
+                    name: '管理首页图片',
+                    func: function() {
+                    }
+                }
+            },
+            langOption: {
+                en: '英文',
+                cn: '中文'
+            }
+        },
+        init: function() {
+            // 初始化侧边栏
+            this.init_sidebar();
+            // 绑定页面内事件
+            this.bind_event();
+        },
+        init_sidebar: function() {
+            this.render_sidebar('viewSite');
+        },
+        render_sidebar: function( curMenu ) {
+            var menuList = this.conf.menuList;
+
+            $('#sidebar').html(tmpl($('#sidebar-tmpl').html(), {
+                'curMenu': curMenu,
+                'menuList': menuList
+            }));
+            for(var i in menuList) {
+                if(curMenu == i) {
+                    $('#' + menuList[i].dom).show();
+                    if(menuList[i].func) {
+                        menuList[i].func();
+                    }
+                } else {
+                    $('#' + menuList[i].dom).hide();
+                }
+            }
+        },
+        bind_event: function() {
+            var that = this;
+            $('#container').click(function( e ) {
+                var action = $(e.target).attr('action');
+
+                switch(action) {
+                    case 'switch-tab':
+                        that.render_sidebar($(e.target).attr('tabid'));
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+    };
+
     window.manageNews = {
         cache: {
             lang: 'cn'

@@ -15,6 +15,42 @@ class AdminApi extends CI_Controller {
         $this->load->model('productmodel', 'product');
     }
 
+    public function check_login() {
+        $username = $this->input->post('username', true);
+        $password = $this->input->post('password', true);
+
+        $ret = $this->check_account(array(
+            'username' => $username,
+            'password' => $password
+        ));
+
+        if($ret == 0) {
+            $this->store_account(array(
+                'username' => $username,
+                'password' => $password
+            ));
+        }
+
+        echo json_encode(array(
+            'ret' => $ret
+        ));
+    }
+
+    private function check_account($account) {
+        $this->load->model( 'user' );
+
+        return $this->user->isUser( $account['username'], $account['password'] ) ? 0 : 1;
+    }
+
+    private function store_account($account) {
+        $this->load->library( array( 'session', 'encrypt' ) );
+
+        $this->session->set_userdata( array(
+            'user' => $account['username'],
+            'pwd' => $this->encrypt->encode( $account['password'] )
+        ) );
+    }
+
     public function add_news() {
         $newsDetail = array(
             'page_title' => $this->input->get('newsTitle'),

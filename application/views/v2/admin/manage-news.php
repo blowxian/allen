@@ -41,7 +41,7 @@
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="../getting-started">网站整体</a>
+                    <a href="<?= base_url() ?>adminDev/manage_home">网站整体</a>
                 </li>
                 <li class="active">
                     <a href="#">新闻管理</a>
@@ -211,6 +211,7 @@
 <script src="<?= base_url() ?>js/jquery.loadmask.min.js"></script>
 <script src="http://v3.bootcss.com/dist/js/bootstrap.js"></script>
 <script src="<?= base_url() ?>js/v2/bootstrap-wysiwyg.js"></script>
+<script src="<?= base_url() ?>js/v2/admin.js"></script>
 
 <!-- Custom JavaScript -->
 <script src="<?= base_url() ?>js/v2/admin.js"></script>

@@ -1459,5 +1459,8 @@ domReadyEvent.init();
 domReady(function()
 {
 	var instanceOne = new ImageFlow();
-	instanceOne.init({ ImageFlowID:'myImageFlow' });
+	instanceOne.init({
+        ImageFlowID: 'myImageFlow',
+        slideshowAutoplay: true
+    });
 });
