@@ -36,6 +36,26 @@ class Home extends CI_Controller {
             $data['recently_news'] = '最新新聞';
         }
 
+        // get photo from database
+        $this->load->model('configmodel');
+
+        $slidePhotoListStr = $this->configmodel->get_custom('slidePhotoList');
+        $slidePhotoList = $slidePhotoListStr != null ? preg_split('/,/', $slidePhotoListStr) : array(
+            'hk.2.jpg',
+            'ywth.jpg',
+            'db.jpg',
+            'hkth.jpg'
+        );
+
+        // set photo slider data
+        $data['slidePhotoList'] = $slidePhotoList;
+/*        $data['slidePhotoList'] = array(
+            'hk.2.jpg',
+            'ywth.jpg',
+            'db.jpg',
+            'hkth.jpg'
+        );*/
+
         // load view
         $this->load->view( 'home', $data );
     }

@@ -51,16 +51,11 @@ $(document).ready(function() {
         },
         conf: {
             menuList: {
-                'viewSite': {
-                    dom: 'view-site',
-                    name: '查看整站统计',
-                    func: function() {
-                    }
-                },
                 'manageHomePic': {
                     dom: 'manage-home-pic',
                     name: '管理首页图片',
                     func: function() {
+                        manageHome.fetch_slide_photo();
                     }
                 }
             },
@@ -76,7 +71,7 @@ $(document).ready(function() {
             this.bind_event();
         },
         init_sidebar: function() {
-            this.render_sidebar('viewSite');
+            this.render_sidebar('manageHomePic');
         },
         render_sidebar: function( curMenu ) {
             var menuList = this.conf.menuList;
@@ -96,9 +91,76 @@ $(document).ready(function() {
                 }
             }
         },
+        fetch_slide_photo: function() {
+            $('#slide-image-container').mask('正在加载...');
+            $.ajax({
+                type: "GET",
+                url: "http://" + window.location.host + "/adminApi/get_slide_image_list",
+                data: {
+                    t: new Date().getTime()
+                },
+                dataType: 'json'
+            })
+                .done(function( json ) {
+                    $('#slide-image-container').unmask();
+                    switch(json.ret) {
+                        case 0:
+                            manageHome.render_slide_photo(json.slidePhotoList);
+                            break;
+                        default:
+                            alert('获取滚动图片失败！错误码：' + json.ret);
+                            break;
+                    }
+                });
+        },
+        render_slide_photo: function(slidePhotoList) {
+            for(var i in slidePhotoList) {
+                $('#slide-photo-list').append(tmpl($('#slide-photo-tmpl').html(), {imgURL: slidePhotoList[i]}));
+            }
+        },
+        add_slide_photo: function() {
+            // 最多添加十张
+            _slidePhotoList = $('#slide-photo-list');
+            if(_slidePhotoList.children('.slide-photo').size() == 10) {
+                alert('最多添加10张！');
+            } else {
+                _slidePhotoList.append(tmpl($('#slide-photo-tmpl').html(), {imgURL: $('#slide-image-url').val()}));
+            }
+        },
+        del_slide_photo: function(dom) {
+            $(dom).closest('.slide-photo').remove();
+        },
+        update_slide_photo_list: function() {
+            $('#slide-image-container').mask('正在保存...');
+            var slidePhotoList = '';
+            $('.slide-image-url').each(function() {
+                slidePhotoList += slidePhotoList == '' ?  $(this).html() : ',' + $(this).html();
+            });
+            $.ajax({
+                type: "GET",
+                url: "http://" + window.location.host + "/adminApi/update_slide_image_list",
+                data: {
+                    'slidePhotoList': slidePhotoList,
+                    t: new Date().getTime()
+                },
+                dataType: 'json'
+            })
+                .done(function( json ) {
+                    $('#slide-image-container').unmask();
+                    switch(json.ret) {
+                        case 0:
+                            alert('保存滚动图片成功！');
+                            break;
+                        default:
+                            alert('保存滚动图片失败！错误码：' + json.ret);
+                            break;
+                    }
+                });
+        },
         bind_event: function() {
-            var that = this;
-            $('#container').click(function( e ) {
+            var that = this,
+                _container = $('#container');
+            _container.click(function( e ) {
                 var action = $(e.target).attr('action');
 
                 switch(action) {
@@ -108,6 +170,32 @@ $(document).ready(function() {
                     default:
                         break;
                 }
+            });
+
+            _container.click(function( e ) {
+                var action = $(e.target).data('action');
+
+                switch(action) {
+                    case 'add-slide-photo':
+                        that.add_slide_photo();
+                        that.update_slide_photo_list();
+                        break;
+                    case 'del-slide-photo':
+                        that.del_slide_photo(e.target);
+                        that.update_slide_photo_list();
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            // 上传封面图片
+            $("#submit-slide-image").on('click', function() {
+                $('#upload-slide-image-wrap').mask('正在上传类目封面...');
+                $("#imageform").ajaxForm(
+                    {
+                        target: '#slide-image-wrap'
+                    }).submit();
             });
         }
     };

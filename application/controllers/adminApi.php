@@ -235,6 +235,65 @@ class AdminApi extends CI_Controller {
         }
     }
 
+    function get_slide_image_list() {
+        $this->load->model('configmodel');
+
+        $slidePhotoListStr = $this->configmodel->get_custom('slidePhotoList');
+        $slidePhotoList = $slidePhotoListStr != null ? preg_split('/,/', $slidePhotoListStr) : array(
+            'hk.2.jpg',
+            'ywth.jpg',
+            'db.jpg',
+            'hkth.jpg'
+        );
+
+        echo json_encode(array(
+            'ret' => 0,
+            'slidePhotoList' => $slidePhotoList
+        ));
+    }
+
+    function update_slide_image_list() {
+        $this->load->model('configmodel');
+
+        $slidePhotoListStr = $this->input->get('slidePhotoList', true);
+
+        $ret = $this->configmodel->set_custom('slidePhotoList', $slidePhotoListStr);
+
+        echo json_encode($ret);
+    }
+
+    function upload_slide_image() {
+        $config['upload_path'] = './img/slide/origin/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['file_name'] = time();
+        $config['max_size']	= '10000';
+        $config['max_width']  = '10240';
+        $config['max_height']  = '7680';
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload( 'slide-image' ))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            print_r( $error );
+        }
+        else
+        {
+            $data = array('upload_data' => $this->upload->data());
+
+            $smallImageSrc = './img/slide/100x100/'.$data['upload_data']['file_name'];
+            $largeImageSrc = './img/slide/origin/'.$data['upload_data']['file_name'];
+
+            $this->zoom_image($smallImageSrc, $largeImageSrc, 100, 3);
+
+            echo '<img src="../img/slide/100x100/'.$data['upload_data']['file_name'].'" data-src="holder.js/100x100" style="padding:0; margin:0;" id="slide-image-tag">
+            <div class="loading-cover" id="slide-image-loading" style="display: none"></div>
+            <input type="hidden" id="slide-image-url" value="'.$data['upload_data']['file_name'].'" />
+            <script>$("#slide-image-tag").load(function(){$("#upload-slide-image-wrap").unmask()});</script>';
+        }
+    }
+
     function convert_lang_to_flag( $lang ) {
         switch( $lang ) {
             case 'en':

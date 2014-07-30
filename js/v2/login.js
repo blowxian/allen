@@ -8,6 +8,18 @@ $(document).ready(function() {
             $('#login-button').click(function( event ) {
                 that.login_request();
             });
+
+            $('#username').on('keypress', function( event ) {
+                if(event.which == 13) {
+                    that.login_request();
+                }
+            });
+
+            $('#password').on('keypress', function( event ) {
+                if(event.which == 13) {
+                    that.login_request();
+                }
+            });
         },
         /**
          *

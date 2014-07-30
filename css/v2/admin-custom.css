@@ -275,3 +275,7 @@
 .product-spec tbody tr td {
     line-height: 2em;
 }
+
+#slide-photo-list .slide-photo .caption {
+    line-height: 80px;
+}

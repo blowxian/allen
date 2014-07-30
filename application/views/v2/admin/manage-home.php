@@ -78,11 +78,47 @@
                 </div>
             </div>
 
+            <!-- S 首页Slide图片列表 -->
             <div class="bs-docs-section first" id="manage-home-pic" style="display: none;">
                 <div class="page-header">
                     <h3 id="managenews">首页图片</h3>
                 </div>
+
+                <div id="slide-image-container">
+
+                    <div class="row well" id="upload-slide-image-wrap">
+
+                        <div class="col-md-2">
+                            <div class="thumbnail" style="margin-bottom:0;" id="slide-image-wrap">
+                                <img data-src="holder.js/100x100" style="padding:0; margin:0;">
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <form id="imageform" method="post" enctype="multipart/form-data" action='../adminApi/upload_slide_image'>
+                                    <input type="file" class="form-control" name="slide-image" style="border-top-left-radius: 4px; border-bottom-left-radius: 4px" id="slide-image" />
+                                </form>
+                            <span class="input-group-btn">
+                                <button id="submit-slide-image" class="btn btn-default" type="button"><span class="glyphicon glyphicon-cloud-upload"></span> 上传商品主图</button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" type="button" data-action="add-slide-photo">添加一张</button>
+                        </div>
+
+                    </div>
+
+                    <h4>已添加图片：</h4>
+
+                    <div class="row" id="slide-photo-list">
+                    </div>
+
+                </div>
             </div>
+            <!-- E 首页Slide图片列表 -->
+
         </div>
     </div>
 
@@ -97,35 +133,29 @@
     <%}%>
 </script>
 
-<script type="text/html" id="lang-switch-tmpl">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><%=langOption[curLang]%> <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <%for(var i in langOption) {
-            if(i != curLang) {%>
-        <li><a href="#" action="switch-lang" langid="<%=i%>"><%=langOption[i]%></a></li>
-        <%  }
-        }%>
-    </ul>
-</script>
+<script type="text/html" id="slide-photo-tmpl">
+    <div class="slide-photo col-sm-6 col-md-12">
+        <div class="thumbnail row">
+            <div class="thumbnail col-sm-2" style="width:100px;">
+                <img src="../img/slide/100x100/<%=imgURL%>" data-src="holder.js/100x100" alt="<%=imgURL%>" style="margin:0;">
+            </div>
 
-<script type="text/html" id="news-list-tmpl">
-<%for(var i in newsList) {%>
-<tr>
-        <td><%=~~i + 1%></td>
-        <td><%=newsList[i].page_title%></td>
-        <td><%=newsList[i].update_time%></td>
-        <td>
-            <button type="button" class="btn btn-default btn-xs" action="edit-news" newsid="<%=newsList[i].page_id%>">修改</button>
-            <button type="button" class="btn btn-default btn-xs" action="del-news" newsid="<%=newsList[i].page_id%>">删除</button>
-        </td>
-    </tr>
-<%}%>
+            <div class="caption col-sm-10">
+                <span class="col-sm-11 slide-image-url"><%=imgURL%></span>
+                <span class="col-sm-1">
+                    <button class="btn btn-default" type="button" data-action="del-slide-photo">删除</button>
+                </span>
+            </div>
+        </div>
+    </div>
 </script>
 
 <!-- Core JavaScript -->
 <script src="<?= base_url() ?>js/jquery-1.10.2.min.js"></script>
 <script src="<?= base_url() ?>js/jquery.loadmask.min.js"></script>
 <script src="http://v3.bootcss.com/dist/js/bootstrap.js"></script>
+<script src="http://cdn.bootcss.com/holder/2.0/holder.min.js"></script>
+<script src="<?= base_url() ?>js/v2/jquery.form.js"></script>
 <script src="<?= base_url() ?>js/v2/bootstrap-wysiwyg.js"></script>
 <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
 
