@@ -12,7 +12,7 @@ class Admin extends CI_Controller {
         $this->load->helper( array( 'form', 'url', 'html' ) );
 
         if( $this->isLogin() ) {
-            redirect( base_url().'admin/home/' );
+            redirect( base_url().'adminDev/manage_home' );
         }
 
         $this->load->view( 'login' );
