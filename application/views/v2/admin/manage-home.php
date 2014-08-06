@@ -119,6 +119,149 @@
             </div>
             <!-- E 首页Slide图片列表 -->
 
+            <!-- S 首页公司地址列表 -->
+            <div class="bs-docs-section first" id="manage-contact" style="display: none;">
+                <div class="page-header">
+                    <h3>公司联系地址</h3>
+                </div>
+
+                <div>
+                    <div class="well">
+                        <div class="row" id="edit-contact-wrap">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon">地址</span>
+                                    <input type="text" class="form-control" placeholder="请填写公司地址">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">邮编</span>
+                                    <input type="text" class="form-control" placeholder="请填写邮编">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">固定电话</span>
+                                    <input type="text" class="form-control" placeholder="请填写固定电话">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">传真</span>
+                                    <input type="text" class="form-control" placeholder="请填写传真">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">移动电话</span>
+                                    <input type="text" class="form-control" placeholder="请填写移动电话">
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">邮箱</span>
+                                    <input type="text" class="form-control" placeholder="请填写邮箱">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">网址</span>
+                                    <input type="text" class="form-control" placeholder="请填写网址">
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="input-group pull-right">
+                            <button class="btn btn-primary" type="button" data-action="add-slide-photo">添加一条</button>
+                            <button class="btn btn-primary" type="button" data-action="add-slide-photo">更新地址</button>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <h4>现有联系地址：</h4>
+
+                    <div class="row" id="contact-list">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th>Username</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td rowspan="3">1</td>
+                          <td colspan="3">Chengxi Industry Distract, Yiwu, Zhejiang, China</td>
+                          <td rowspan="3">
+                            <button class="btn btn-primary" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">编辑</button>
+                            <br />
+                            <button class="btn btn-danger" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">删除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>+86-579-85899138</td>
+                          <td>+86-13958418002</td>
+                          <td>+86-579-85899355</td>
+                        </tr>
+                        <tr>
+                          <td>322000</td>
+                          <td>taihepacking@aliyun.com</td>
+                          <td>http://www.taihepacking.com</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="3">2</td>
+                          <td colspan="3">Chengxi Industry Distract, Yiwu, Zhejiang, China</td>
+                          <td rowspan="3">
+                            <button class="btn btn-primary" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">编辑</button>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>+86-579-85899138</td>
+                          <td>+86-13958418002</td>
+                          <td>+86-579-85899355</td>
+                        </tr>
+                        <tr>
+                          <td>322000</td>
+                          <td>taihepacking@aliyun.com</td>
+                          <td>http://www.taihepacking.com</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="3">3</td>
+                          <td colspan="3">Chengxi Industry Distract, Yiwu, Zhejiang, China</td>
+                          <td rowspan="3">
+                            <button class="btn btn-primary" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">编辑</button>
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>+86-579-85899138</td>
+                          <td>+86-13958418002</td>
+                          <td>+86-579-85899355</td>
+                        </tr>
+                        <tr>
+                          <td>322000</td>
+                          <td>taihepacking@aliyun.com</td>
+                          <td>http://www.taihepacking.com</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- E 首页Slide图片列表 -->
+
         </div>
     </div>
 

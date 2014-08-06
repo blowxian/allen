@@ -1,47 +1,47 @@
 $(document).ready(function() {
     var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
             'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-            'Times New Roman', 'Verdana'],
+            'Times New Roman', 'Verdana'
+        ],
         fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-    $.each(fonts, function (idx, fontName) {
-        fontTarget.append($('<li><a data-edit="fontName ' + fontName +'" style="font-family:\''+ fontName +'\'">'+fontName + '</a></li>'));
+    $.each(fonts, function(idx, fontName) {
+        fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
     });
 
     $('#news-editor').wysiwyg();
 
     // Simple JavaScript Templating
     // John Resig - http://ejohn.org/ - MIT Licensed
-    (function(){
+    (function() {
         var cache = {};
 
-        this.tmpl = function tmpl(str, data){
+        this.tmpl = function tmpl(str, data) {
             // Figure out if we're getting a template, or if we need to
             // load the template - and be sure to cache the result.
             var fn = !/\W/.test(str) ?
                 cache[str] = cache[str] ||
-                    tmpl(document.getElementById(str).innerHTML) :
+                tmpl(document.getElementById(str).innerHTML) :
 
                 // Generate a reusable function that will serve as a template
                 // generator (and which will be cached).
                 new Function("obj",
                     "var p=[],print=function(){p.push.apply(p,arguments);};" +
 
-                        // Introduce the data as local variables using with(){}
-                        "with(obj){p.push('" +
+                    // Introduce the data as local variables using with(){}
+                    "with(obj){p.push('" +
 
-                        // Convert the template into pure JavaScript
-                        str
-                            .replace(/[\r\t\n]/g, " ")
-                            .split("<%").join("\t")
-                            .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                            .replace(/\t=(.*?)%>/g, "',$1,'")
-                            .split("\t").join("');")
-                            .split("%>").join("p.push('")
-                            .split("\r").join("\\'")
-                        + "');}return p.join('');");
+                    // Convert the template into pure JavaScript
+                    str
+                    .replace(/[\r\t\n]/g, " ")
+                    .split("<%").join("\t")
+                    .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+                    .replace(/\t=(.*?)%>/g, "',$1,'")
+                    .split("\t").join("');")
+                    .split("%>").join("p.push('")
+                    .split("\r").join("\\'") + "');}return p.join('');");
 
             // Provide some basic currying to the user
-            return data ? fn( data ) : fn;
+            return data ? fn(data) : fn;
         };
     })();
 
@@ -57,6 +57,11 @@ $(document).ready(function() {
                     func: function() {
                         manageHome.fetch_slide_photo();
                     }
+                },
+                'manageContact': {
+                    dom: 'manage-contact',
+                    name: '管理公司联系地址',
+                    func: function() {}
                 }
             },
             langOption: {
@@ -71,19 +76,19 @@ $(document).ready(function() {
             this.bind_event();
         },
         init_sidebar: function() {
-            this.render_sidebar('manageHomePic');
+            this.render_sidebar('manageContact');
         },
-        render_sidebar: function( curMenu ) {
+        render_sidebar: function(curMenu) {
             var menuList = this.conf.menuList;
 
             $('#sidebar').html(tmpl($('#sidebar-tmpl').html(), {
                 'curMenu': curMenu,
                 'menuList': menuList
             }));
-            for(var i in menuList) {
-                if(curMenu == i) {
+            for (var i in menuList) {
+                if (curMenu == i) {
                     $('#' + menuList[i].dom).show();
-                    if(menuList[i].func) {
+                    if (menuList[i].func) {
                         menuList[i].func();
                     }
                 } else {
@@ -101,9 +106,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#slide-image-container').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             manageHome.render_slide_photo(json.slidePhotoList);
                             break;
@@ -114,17 +119,21 @@ $(document).ready(function() {
                 });
         },
         render_slide_photo: function(slidePhotoList) {
-            for(var i in slidePhotoList) {
-                $('#slide-photo-list').append(tmpl($('#slide-photo-tmpl').html(), {imgURL: slidePhotoList[i]}));
+            for (var i in slidePhotoList) {
+                $('#slide-photo-list').append(tmpl($('#slide-photo-tmpl').html(), {
+                    imgURL: slidePhotoList[i]
+                }));
             }
         },
         add_slide_photo: function() {
             // 最多添加十张
             _slidePhotoList = $('#slide-photo-list');
-            if(_slidePhotoList.children('.slide-photo').size() == 10) {
+            if (_slidePhotoList.children('.slide-photo').size() == 10) {
                 alert('最多添加10张！');
             } else {
-                _slidePhotoList.append(tmpl($('#slide-photo-tmpl').html(), {imgURL: $('#slide-image-url').val()}));
+                _slidePhotoList.append(tmpl($('#slide-photo-tmpl').html(), {
+                    imgURL: $('#slide-image-url').val()
+                }));
             }
         },
         del_slide_photo: function(dom) {
@@ -134,7 +143,7 @@ $(document).ready(function() {
             $('#slide-image-container').mask('正在保存...');
             var slidePhotoList = '';
             $('.slide-image-url').each(function() {
-                slidePhotoList += slidePhotoList == '' ?  $(this).html() : ',' + $(this).html();
+                slidePhotoList += slidePhotoList == '' ? $(this).html() : ',' + $(this).html();
             });
             $.ajax({
                 type: "GET",
@@ -145,9 +154,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#slide-image-container').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('保存滚动图片成功！');
                             break;
@@ -160,10 +169,10 @@ $(document).ready(function() {
         bind_event: function() {
             var that = this,
                 _container = $('#container');
-            _container.click(function( e ) {
+            _container.click(function(e) {
                 var action = $(e.target).attr('action');
 
-                switch(action) {
+                switch (action) {
                     case 'switch-tab':
                         that.render_sidebar($(e.target).attr('tabid'));
                         break;
@@ -172,10 +181,10 @@ $(document).ready(function() {
                 }
             });
 
-            _container.click(function( e ) {
+            _container.click(function(e) {
                 var action = $(e.target).data('action');
 
-                switch(action) {
+                switch (action) {
                     case 'add-slide-photo':
                         that.add_slide_photo();
                         that.update_slide_photo_list();
@@ -192,10 +201,9 @@ $(document).ready(function() {
             // 上传封面图片
             $("#submit-slide-image").on('click', function() {
                 $('#upload-slide-image-wrap').mask('正在上传类目封面...');
-                $("#imageform").ajaxForm(
-                    {
-                        target: '#slide-image-wrap'
-                    }).submit();
+                $("#imageform").ajaxForm({
+                    target: '#slide-image-wrap'
+                }).submit();
             });
         }
     };
@@ -243,17 +251,17 @@ $(document).ready(function() {
         init_sidebar: function() {
             this.render_sidebar('manageNews');
         },
-        render_sidebar: function( curMenu ) {
+        render_sidebar: function(curMenu) {
             var menuList = this.conf.menuList;
 
             $('#sidebar').html(tmpl($('#sidebar-tmpl').html(), {
                 'curMenu': curMenu,
                 'menuList': menuList
             }));
-            for(var i in menuList) {
-                if(curMenu == i) {
+            for (var i in menuList) {
+                if (curMenu == i) {
                     $('#' + menuList[i].dom).show();
-                    if(menuList[i].func) {
+                    if (menuList[i].func) {
                         menuList[i].func();
                     }
                 } else {
@@ -264,7 +272,7 @@ $(document).ready(function() {
         init_lang_switch: function() {
             this.render_lang_switch('cn')
         },
-        render_lang_switch: function( curLang ) {
+        render_lang_switch: function(curLang) {
             this.cache.lang = curLang;
             $('#lang-switch').html(tmpl($('#lang-switch-tmpl').html(), {
                 'curLang': curLang,
@@ -284,9 +292,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#news-content-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('新闻保存成功！');
                             manageNews.render_sidebar('manageNews');
@@ -310,9 +318,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#news-list-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             manageNews.render_news_list(json.newsList);
                             break;
@@ -322,12 +330,12 @@ $(document).ready(function() {
                     }
                 });
         },
-        render_news_list: function( newsList ) {
+        render_news_list: function(newsList) {
             $('#news-list').html(tmpl($('#news-list-tmpl').html(), {
                 'newsList': newsList
             }));
         },
-        delete_news: function( newsId ) {
+        delete_news: function(newsId) {
             $('#news-list-wrap').mask('正在删除...');
             $.ajax({
                 type: "GET",
@@ -337,9 +345,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#news-list-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('新闻删除成功！');
                             manageNews.fetch_news_list();
@@ -350,13 +358,13 @@ $(document).ready(function() {
                     }
                 });
         },
-        render_update_news: function( newsId ) {
+        render_update_news: function(newsId) {
             var menuList = this.conf.menuList;
 
-            for(var i in menuList) {
-                if('addNews' == i) {
+            for (var i in menuList) {
+                if ('addNews' == i) {
                     $('#' + menuList[i].dom).show();
-                    if(menuList[i].func) {
+                    if (menuList[i].func) {
                         menuList[i].func();
                     }
                 } else {
@@ -379,9 +387,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#news-content-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             $('#news-title').val(json.data.page_title);
                             $('#news-editor').html(json.data.page_content);
@@ -392,7 +400,7 @@ $(document).ready(function() {
                     }
                 });
         },
-        update_news: function( newsId ) {
+        update_news: function(newsId) {
             $('#news-content-wrap').mask('正在更新...');
             $.ajax({
                 type: "GET",
@@ -404,9 +412,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#news-content-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('新闻更新成功！');
                             manageNews.render_sidebar('manageNews');
@@ -419,10 +427,10 @@ $(document).ready(function() {
         },
         bind_event: function() {
             var that = this;
-            $('#container').click(function( e ) {
+            $('#container').click(function(e) {
                 var action = $(e.target).attr('action');
 
-                switch(action) {
+                switch (action) {
                     case 'switch-tab':
                         that.render_sidebar($(e.target).attr('tabid'));
                         break;
@@ -439,7 +447,7 @@ $(document).ready(function() {
                         that.update_news($(e.target).attr('newsid'));
                         break;
                     case 'reset-news':
-                        if(confirm('重置将不保存任何信息，确定重置？')) {
+                        if (confirm('重置将不保存任何信息，确定重置？')) {
                             $('#news-title').val('');
                             $('#news-editor').html('');
                         }
@@ -499,9 +507,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#cate-list-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             manageCategory.render_category_selector(manageCategory.convert_to_category_tree(json.categoryList));
                             break;
@@ -514,26 +522,26 @@ $(document).ready(function() {
         init_lang_switch: function() {
             this.render_lang_switch('cn')
         },
-        render_lang_switch: function( curLang ) {
+        render_lang_switch: function(curLang) {
             this.cache.lang = curLang;
             $('#lang-switch').html(tmpl($('#lang-switch-tmpl').html(), {
                 'curLang': curLang,
                 'langOption': this.conf.langOption
             }));
         },
-        render_category_selector: function( categoryTree ) {
+        render_category_selector: function(categoryTree) {
             this.init_category_tree();
 
             var dl = this.cache.domList,
                 ct = categoryTree,
                 index = 1;
 
-            for(var i in dl) {
+            for (var i in dl) {
                 dl[i].html('');
             }
 
-            while('0' in ct) {
-                if('children' in ct['0']) {
+            while ('0' in ct) {
+                if ('children' in ct['0']) {
                     ct = ct['0'].children;
                     this.render_category_list(ct, dl['level' + index], index);
                     index++;
@@ -542,13 +550,13 @@ $(document).ready(function() {
                 }
             }
         },
-        render_category_list: function( categoryList, dom, level ) {
+        render_category_list: function(categoryList, dom, level) {
             dom.html(tmpl($('#category-list-tmpl').html(), {
                 'categoryList': categoryList,
                 'level': level
             }));
         },
-        render_add_category: function( dom, level ) {
+        render_add_category: function(dom, level) {
             dom.html(tmpl($('#add-category-tmpl').html(), {
                 'level': level
             }) + dom.html());
@@ -558,10 +566,10 @@ $(document).ready(function() {
                 sc = this.cache.selectedCate,
                 level = 0;
 
-            while('0' in ct) {
+            while ('0' in ct) {
                 sc['level' + level] = ct['0'];
                 ct['0']['selected'] = 1;
-                if('children' in ct['0']) {
+                if ('children' in ct['0']) {
                     ct = ct['0'].children;
                     level++;
                 } else {
@@ -569,28 +577,28 @@ $(document).ready(function() {
                 }
             }
         },
-        update_category_tree: function( option ) {
-            switch(option.action) {
+        update_category_tree: function(option) {
+            switch (option.action) {
                 case 'update-select':
                     var ct = this.cache.categoryTree,
                         dl = this.cache.domList,
                         sc = this.cache.selectedCate,
                         level = 0;
 
-                    while('0' in ct) {
-                        if(level < option.level) {
-                            for(var i in ct) {
-                                if('selected' in ct[i] && ct[i].selected) {
+                    while ('0' in ct) {
+                        if (level < option.level) {
+                            for (var i in ct) {
+                                if ('selected' in ct[i] && ct[i].selected) {
                                     sc['level' + level] = ct[i];
-                                    if('children' in ct[i]) {
+                                    if ('children' in ct[i]) {
                                         ct = ct[i].children;
                                         level++;
                                     }
                                     break;
                                 }
                             }
-                        } else if(level == option.level && option.cateno in ct) {
-                            for(var i in ct) {
+                        } else if (level == option.level && option.cateno in ct) {
+                            for (var i in ct) {
                                 ct[i]['selected'] = 0;
                             }
                             sc['level' + level] = ct[option.cateno];
@@ -598,24 +606,24 @@ $(document).ready(function() {
 
                             this.render_category_list(ct, dl['level' + level], level);
 
-                            if('children' in ct[option.cateno]) {
+                            if ('children' in ct[option.cateno]) {
                                 ct = ct[option.cateno].children;
                                 level++;
                             } else {
                                 break;
                             }
                         } else {
-                            for(var i in ct) {
+                            for (var i in ct) {
                                 ct[i]['selected'] = 0;
                             }
                             sc['level' + level] = ct['0'];
                             ct['0']['selected'] = 1;
 
-                            if(level > 0) {
+                            if (level > 0) {
                                 this.render_category_list(ct, dl['level' + level], level);
                             }
 
-                            if('children' in ct['0']) {
+                            if ('children' in ct['0']) {
                                 ct = ct['0'].children;
                                 level++;
                             } else {
@@ -623,7 +631,7 @@ $(document).ready(function() {
                             }
                         }
                     }
-                    for(++level; level < 4; level++) {
+                    for (++level; level < 4; level++) {
                         this.render_category_list({}, dl['level' + level], level);
                     }
                     break;
@@ -633,7 +641,7 @@ $(document).ready(function() {
                     break;
             }
         },
-        add_category: function( option ) {
+        add_category: function(option) {
             var that = this;
             $('#cate-list-wrap').mask('正在添加类目...');
             $.ajax({
@@ -648,9 +656,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#cate-list-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('类目添加成功！');
                             $('button[data-action="render-add"]').attr('disabled', false);
@@ -662,7 +670,7 @@ $(document).ready(function() {
                     }
                 });
         },
-        del_category: function( cateId ) {
+        del_category: function(cateId) {
             var that = this;
             $('#cate-list-wrap').mask('正在删除类目...');
             $.ajax({
@@ -673,9 +681,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#cate-list-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('类目删除成功！');
                             that.fetch_category();
@@ -686,7 +694,7 @@ $(document).ready(function() {
                     }
                 });
         },
-        fetch_category_detail: function( cateId ) {
+        fetch_category_detail: function(cateId) {
             var that = this;
             $('#cate-detail-wrap').mask('正在加载类目详情...');
             $.ajax({
@@ -697,9 +705,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#cate-detail-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             that.render_category_detail(json.categoryDetail[0]);
                             break;
@@ -709,16 +717,18 @@ $(document).ready(function() {
                     }
                 });
         },
-        render_category_detail: function( cateDetail ) {
+        render_category_detail: function(cateDetail) {
             this.render_lang_switch(cateDetail.category_lang == '1' ? 'en' : 'cn');
             $('#cate-id').val(cateDetail.category_id);
             $('#cate-title').val(cateDetail.category_name);
             $('#cate-desc').val(cateDetail.category_desc);
             $('cate-cover-url').val(cateDetail.category_cover);
-            if(cateDetail.category_cover == '') {
+            if (cateDetail.category_cover == '') {
                 Holder.run();
             } else {
-                $('#cate-cover-loading').show().css({ opacity: .8 });
+                $('#cate-cover-loading').show().css({
+                    opacity: .8
+                });
                 $('#cate-cover').attr('src', 'http://' + window.location.host + '/img/product/cover/' + cateDetail.category_cover).load(function() {
                     $('#cate-cover-loading').hide();
                 });
@@ -738,9 +748,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#cate-detail-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('类目更新成功！');
                             break;
@@ -752,10 +762,10 @@ $(document).ready(function() {
         },
         bind_event: function() {
             var that = this;
-            $('#cate-list-wrap').click(function( e ) {
+            $('#cate-list-wrap').click(function(e) {
                 var action = $(e.target).data('action');
 
-                switch(action) {
+                switch (action) {
                     case 'select':
                         that.update_category_tree({
                             action: 'update-select',
@@ -767,7 +777,9 @@ $(document).ready(function() {
                     case 'render-add':
                         var categoryList = that.cache.domList['level' + $(e.target).data('level')].parent();
                         that.render_add_category(that.cache.domList['level' + $(e.target).data('level')], $(e.target).data('level'));
-                        categoryList.animate({scrollTop: 0}, 0);
+                        categoryList.animate({
+                            scrollTop: 0
+                        }, 0);
                         $(e.target).attr('disabled', true);
                         break;
                     case 'add':
@@ -777,7 +789,7 @@ $(document).ready(function() {
                         });
                         break;
                     case 'delete':
-                        if(confirm("确定删除类目吗？该目录下的子目录以及商品均会被删除。")) {
+                        if (confirm("确定删除类目吗？该目录下的子目录以及商品均会被删除。")) {
                             that.del_category($(e.target).data('cateid'));
                         }
                         break;
@@ -787,10 +799,9 @@ $(document).ready(function() {
             // 上传封面图片
             $("#submit-cate-cover-image").on('click', function() {
                 $('#upload-cate-cover-wrap').mask('正在上传类目封面...');
-                $("#imageform").ajaxForm(
-                    {
-                        target: '#cate-cover-wrap'
-                    }).submit();
+                $("#imageform").ajaxForm({
+                    target: '#cate-cover-wrap'
+                }).submit();
             });
 
             // 更新类目信息
@@ -798,10 +809,10 @@ $(document).ready(function() {
                 that.update_category();
             });
 
-            $("#lang-switch").click(function( e ) {
+            $("#lang-switch").click(function(e) {
                 var action = $(e.target).attr('action');
 
-                switch(action) {
+                switch (action) {
                     case 'switch-lang':
                         that.render_lang_switch($(e.target).attr('langid'));
                         break;
@@ -810,20 +821,22 @@ $(document).ready(function() {
                 }
             });
         },
-        convert_to_category_tree: function( categoryList ) {
+        convert_to_category_tree: function(categoryList) {
             var cateList = $.extend([], categoryList),
                 cateIdList = ['0'],
-                cateObjList = {0 : {
-                    category_id: 0
-                }};
+                cateObjList = {
+                    0: {
+                        category_id: 0
+                    }
+                };
 
-            while(cateList.length > 0) {
+            while (cateList.length > 0) {
                 var flag = false;
-                for(var i = 0; i < cateList.length; i++) {
+                for (var i = 0; i < cateList.length; i++) {
                     var index = cateIdList.indexOf(cateList[i].parent_id);
-                    if(index != -1) {
+                    if (index != -1) {
                         flag = true;
-                        if(!('children' in cateObjList[cateIdList[index]])) {
+                        if (!('children' in cateObjList[cateIdList[index]])) {
                             cateObjList[cateIdList[index]]['children'] = [];
                         }
                         cateObjList[cateIdList[index]].children.push(cateList[i]);
@@ -834,11 +847,13 @@ $(document).ready(function() {
                     }
                 }
 
-                if(!flag) {
+                if (!flag) {
                     break;
                 }
             }
-            this.cache.categoryTree = {'0': cateObjList['0']};
+            this.cache.categoryTree = {
+                '0': cateObjList['0']
+            };
 
             return this.cache.categoryTree;
         }
@@ -891,9 +906,9 @@ $(document).ready(function() {
                 'byKeyword': {
                     dom: 'search-product-by-keyword',
                     name: '通过关键字查找商品',
-                    func: function() {
-                    }
-                }/*,
+                    func: function() {}
+                }
+                /*,
                 'byCategory': {
                     dom: 'search-product-by-category',
                     name: '通过类目查找商品',
@@ -920,7 +935,7 @@ $(document).ready(function() {
         init_lang_switch: function() {
             this.render_lang_switch('cn')
         },
-        render_lang_switch: function( curLang ) {
+        render_lang_switch: function(curLang) {
             this.cache.lang = curLang;
             $('#lang-switch').html(tmpl($('#lang-switch-tmpl').html(), {
                 'curLang': curLang,
@@ -941,9 +956,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#cate-list-wrap').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             manageProduct.cache.categoryList = $.extend([], json.categoryList);
                             manageProduct.render_category_selector(manageProduct.convert_to_category_tree(json.categoryList));
@@ -954,7 +969,7 @@ $(document).ready(function() {
                     }
                 });
         },
-        fetch_product: function( pid ) {
+        fetch_product: function(pid) {
             $('#add-product-main').mask('正在加载...');
             $.ajax({
                 type: "GET",
@@ -965,9 +980,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#add-product-main').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             manageProduct.render_modify_product(json.product);
                             break;
@@ -980,7 +995,7 @@ $(document).ready(function() {
         init_sidebar: function() {
             this.render_sidebar('menu' in this.get_url_vars() ? this.get_url_vars().menu : 'manageProduct');
         },
-        render_sidebar: function( curMenu ) {
+        render_sidebar: function(curMenu) {
             var menuList = this.conf.menuList;
 
             $('#sidebar').html(tmpl($('#sidebar-tmpl').html(), {
@@ -989,10 +1004,10 @@ $(document).ready(function() {
             }));
 
             var domId = null;
-            for(var i in menuList) {
-                if(curMenu == i) {
+            for (var i in menuList) {
+                if (curMenu == i) {
                     domId = '#' + menuList[i].dom;
-                    if(menuList[i].func) {
+                    if (menuList[i].func) {
                         menuList[i].func();
                     }
 
@@ -1002,19 +1017,19 @@ $(document).ready(function() {
             }
             $(domId).show();
         },
-        render_category_selector: function( categoryTree ) {
+        render_category_selector: function(categoryTree) {
             this.init_category_tree();
 
             var dl = this.cache.domList,
                 ct = categoryTree,
                 index = 1;
 
-            for(var i in dl) {
+            for (var i in dl) {
                 dl[i].html('');
             }
 
-            while('0' in ct) {
-                if('children' in ct['0']) {
+            while ('0' in ct) {
+                if ('children' in ct['0']) {
                     ct = ct['0'].children;
                     this.render_category_list(ct, dl['level' + index], index);
                     index++;
@@ -1023,7 +1038,7 @@ $(document).ready(function() {
                 }
             }
         },
-        render_category_list: function( categoryList, dom, level ) {
+        render_category_list: function(categoryList, dom, level) {
             dom.html(tmpl($('#category-list-tmpl').html(), {
                 'categoryList': categoryList,
                 'level': level
@@ -1034,10 +1049,10 @@ $(document).ready(function() {
                 sc = this.cache.selectedCate,
                 level = 0;
 
-            while('0' in ct) {
+            while ('0' in ct) {
                 sc['level' + level] = ct['0'];
                 ct['0']['selected'] = 1;
-                if('children' in ct['0']) {
+                if ('children' in ct['0']) {
                     ct = ct['0'].children;
                     level++;
                 } else {
@@ -1045,28 +1060,28 @@ $(document).ready(function() {
                 }
             }
         },
-        update_category_tree: function( option ) {
-            switch(option.action) {
+        update_category_tree: function(option) {
+            switch (option.action) {
                 case 'update-select':
                     var ct = this.cache.categoryTree,
                         dl = this.cache.domList,
                         sc = this.cache.selectedCate,
                         level = 0;
 
-                    while('0' in ct) {
-                        if(level < option.level) {
-                            for(var i in ct) {
-                                if('selected' in ct[i] && ct[i].selected) {
+                    while ('0' in ct) {
+                        if (level < option.level) {
+                            for (var i in ct) {
+                                if ('selected' in ct[i] && ct[i].selected) {
                                     sc['level' + level] = ct[i];
-                                    if('children' in ct[i]) {
+                                    if ('children' in ct[i]) {
                                         ct = ct[i].children;
                                         level++;
                                     }
                                     break;
                                 }
                             }
-                        } else if(level == option.level && option.cateno in ct) {
-                            for(var i in ct) {
+                        } else if (level == option.level && option.cateno in ct) {
+                            for (var i in ct) {
                                 ct[i]['selected'] = 0;
                             }
                             sc['level' + level] = ct[option.cateno];
@@ -1074,24 +1089,24 @@ $(document).ready(function() {
 
                             this.render_category_list(ct, dl['level' + level], level);
 
-                            if('children' in ct[option.cateno]) {
+                            if ('children' in ct[option.cateno]) {
                                 ct = ct[option.cateno].children;
                                 level++;
                             } else {
                                 break;
                             }
                         } else {
-                            for(var i in ct) {
+                            for (var i in ct) {
                                 ct[i]['selected'] = 0;
                             }
                             sc['level' + level] = ct['0'];
                             ct['0']['selected'] = 1;
 
-                            if(level > 0) {
+                            if (level > 0) {
                                 this.render_category_list(ct, dl['level' + level], level);
                             }
 
-                            if('children' in ct['0']) {
+                            if ('children' in ct['0']) {
                                 ct = ct['0'].children;
                                 level++;
                             } else {
@@ -1099,7 +1114,7 @@ $(document).ready(function() {
                             }
                         }
                     }
-                    for(++level; level < 4; level++) {
+                    for (++level; level < 4; level++) {
                         sc['level' + level] = 0;
                         this.render_category_list({}, dl['level' + level], level);
                     }
@@ -1120,8 +1135,8 @@ $(document).ready(function() {
                 sc = that.cache.selectedCate,
                 selectedCateId = 0;
 
-            for(var i = this.size(sc) - 1; i > 0; i--) {
-                if(sc['level' + i] != 0) {
+            for (var i = this.size(sc) - 1; i > 0; i--) {
+                if (sc['level' + i] != 0) {
                     selectedCateId = sc['level' + i].category_id;
                     break;
                 }
@@ -1133,8 +1148,8 @@ $(document).ready(function() {
             var sc = this.cache.selectedCate,
                 traceText = "";
 
-            for(var i = 1; i < this.size(sc); i++) {
-                if(sc['level' + i] != 0) {
+            for (var i = 1; i < this.size(sc); i++) {
+                if (sc['level' + i] != 0) {
                     traceText += (i == 1 ? sc['level' + i].category_name : ' > ' + sc['level' + i].category_name);
                 }
             }
@@ -1148,12 +1163,12 @@ $(document).ready(function() {
                 productUnitPrice: ''
             }));
         },
-        remove_product_spec: function( dom ) {
-            while($(dom).prop('tagName') != 'TR' && $(dom).prop('tagName') != 'BODY') {
+        remove_product_spec: function(dom) {
+            while ($(dom).prop('tagName') != 'TR' && $(dom).prop('tagName') != 'BODY') {
                 dom = $(dom).parent();
             }
 
-            if($(dom).prop('tagName') == 'TR') {
+            if ($(dom).prop('tagName') == 'TR') {
                 $(dom).remove();
             }
         },
@@ -1173,15 +1188,17 @@ $(document).ready(function() {
                     productSmallImage: $('#product-small-image-url').val(),
                     productHugeImage: "",
                     productCategory: $('#selected-category-id').val(),
-                    productSpec: $('.product-spec-item').map(function(){return $(this).val()}).get().join(','),
+                    productSpec: $('.product-spec-item').map(function() {
+                        return $(this).val()
+                    }).get().join(','),
                     productLang: that.cache.lang == 'cn' ? 2 : 1,
                     t: new Date().getTime()
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#add-product').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('商品创建成功！即将跳转商品管理页面。');
                             that.render_sidebar('manageProduct');
@@ -1195,17 +1212,17 @@ $(document).ready(function() {
         init_product_search_tab: function() {
             this.switch_product_search_tab('byKeyword');
         },
-        switch_product_search_tab: function( curTab ) {
+        switch_product_search_tab: function(curTab) {
             var tabList = this.conf.tabList;
 
             $('#product-search-tab').html(tmpl($('#switch-product-search-tab-tmpl').html(), {
                 'curTab': curTab,
                 'tabList': tabList
             }));
-            for(var i in tabList) {
-                if(curTab == i) {
+            for (var i in tabList) {
+                if (curTab == i) {
                     $('#' + tabList[i].dom).show();
-                    if(tabList[i].func) {
+                    if (tabList[i].func) {
                         tabList[i].func();
                     }
                 } else {
@@ -1215,7 +1232,7 @@ $(document).ready(function() {
 
             $('#query-product-result').hide();
         },
-        query_product_by_keyword: function( keyword ) {
+        query_product_by_keyword: function(keyword) {
             var that = this;
             $('#query-product-result').mask('正在检索商品...');
             that.cache.curPage = arguments.length >= 2 ? arguments[1] : 1;
@@ -1229,9 +1246,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#query-product-result').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             that.render_query_product_result(json);
                             break;
@@ -1241,7 +1258,7 @@ $(document).ready(function() {
                     }
                 });
         },
-        render_query_product_result: function( queryJSON ) {
+        render_query_product_result: function(queryJSON) {
             var that = this;
             $('#query-product-result-list').html(tmpl($('#query-product-result-tmpl').html(), queryJSON));
             $('.pagination').jqPagination({
@@ -1253,7 +1270,7 @@ $(document).ready(function() {
             });
             $('#query-product-result').show();
         },
-        render_modify_product: function( product ) {
+        render_modify_product: function(product) {
             // 填充现有商品数据
             $("#product-id").val(product.product_id);
             $("#product-name").val(product.product_name);
@@ -1271,12 +1288,12 @@ $(document).ready(function() {
             // 填充商品规格
             var spec_array = product.product_spec.split(',');
             $('#product-spec tbody tr').each(function(index) {
-                if(index >= 1) {
+                if (index >= 1) {
                     $(this).remove();
                 }
             });
-            if(spec_array.length / 3 >= 2) {
-                for(var i = 1; i < (spec_array.length / 3); i++) {
+            if (spec_array.length / 3 >= 2) {
+                for (var i = 1; i < (spec_array.length / 3); i++) {
                     this.add_product_spec();
                 }
             }
@@ -1301,15 +1318,17 @@ $(document).ready(function() {
                     productSmallImage: $('#product-small-image-url').val(),
                     productHugeImage: "",
                     productCategory: $('#selected-category-id').val(),
-                    productSpec: $('.product-spec-item').map(function(){return $(this).val()}).get().join(','),
+                    productSpec: $('.product-spec-item').map(function() {
+                        return $(this).val()
+                    }).get().join(','),
                     productLang: that.cache.lang == 'cn' ? 2 : 1,
                     t: new Date().getTime()
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#add-product').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             alert('商品更新成功！即将跳转商品管理页面。');
                             that.render_sidebar('manageProduct');
@@ -1320,7 +1339,7 @@ $(document).ready(function() {
                     }
                 });
         },
-        delete_product: function( pid ) {
+        delete_product: function(pid) {
             var that = this;
             $('#query-product-result').mask('正在删除商品...');
             $.ajax({
@@ -1332,9 +1351,9 @@ $(document).ready(function() {
                 },
                 dataType: 'json'
             })
-                .done(function( json ) {
+                .done(function(json) {
                     $('#query-product-result').unmask();
-                    switch(json.ret) {
+                    switch (json.ret) {
                         case 0:
                             that.query_product_by_keyword($('#keyword').val(), (that.cache.curPage ? that.cache.curPage : 1));
                             break;
@@ -1346,10 +1365,10 @@ $(document).ready(function() {
         },
         bind_event: function() {
             var that = this;
-            $('#container').click(function( e ) {
+            $('#container').click(function(e) {
                 var action = $(e.target).data('action');
 
-                switch(action) {
+                switch (action) {
                     case 'select':
                         that.update_category_tree({
                             action: 'update-select',
@@ -1402,10 +1421,9 @@ $(document).ready(function() {
             // 上传封面图片
             $("#submit-product-image").on('click', function() {
                 $('#upload-product-image-wrap').mask('正在上传类目封面...');
-                $("#imageform").ajaxForm(
-                    {
-                        target: '#product-image-wrap'
-                    }).submit();
+                $("#imageform").ajaxForm({
+                    target: '#product-image-wrap'
+                }).submit();
             });
 
             // 展开类目选择器
@@ -1421,20 +1439,22 @@ $(document).ready(function() {
                 }
             });
         },
-        convert_to_category_tree: function( categoryList ) {
+        convert_to_category_tree: function(categoryList) {
             var cateList = $.extend([], categoryList),
                 cateIdList = ['0'],
-                cateObjList = {0 : {
-                    category_id: 0
-                }};
+                cateObjList = {
+                    0: {
+                        category_id: 0
+                    }
+                };
 
-            while(cateList.length > 0) {
+            while (cateList.length > 0) {
                 var flag = false;
-                for(var i = 0; i < cateList.length; i++) {
+                for (var i = 0; i < cateList.length; i++) {
                     var index = cateIdList.indexOf(cateList[i].parent_id);
-                    if(index != -1) {
+                    if (index != -1) {
                         flag = true;
-                        if(!('children' in cateObjList[cateIdList[index]])) {
+                        if (!('children' in cateObjList[cateIdList[index]])) {
                             cateObjList[cateIdList[index]]['children'] = [];
                         }
                         cateObjList[cateIdList[index]].children.push(cateList[i]);
@@ -1445,11 +1465,13 @@ $(document).ready(function() {
                     }
                 }
 
-                if(!flag) {
+                if (!flag) {
                     break;
                 }
             }
-            this.cache.categoryTree = {'0': cateObjList['0']};
+            this.cache.categoryTree = {
+                '0': cateObjList['0']
+            };
 
             return this.cache.categoryTree;
         },
@@ -1457,48 +1479,47 @@ $(document).ready(function() {
             var size = 0,
                 key;
 
-            for(key in obj) {
-                if(obj.hasOwnProperty(key)) size++;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
             }
 
             return size;
         },
-        get_url_vars: function ()
-        {
-            var vars = [], hash;
+        get_url_vars: function() {
+            var vars = [],
+                hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1);
             hashes = hashes.slice(0, hashes.indexOf('#')).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
+            for (var i = 0; i < hashes.length; i++) {
                 hash = hashes[i].split('=');
                 vars.push(hash[0]);
                 vars[hash[0]] = hash[1];
             }
             return vars;
         },
-        get_category_name: function( cid ) {
+        get_category_name: function(cid) {
             var cl = this.cache.categoryList;
-            for(var i in cl) {
-                if(cl[i].category_id == cid) {
+            for (var i in cl) {
+                if (cl[i].category_id == cid) {
                     return cl[i].category_name;
                 }
             }
         },
-        get_category_parent: function( cid ) {
-            if(!~~cid) {
+        get_category_parent: function(cid) {
+            if (!~~cid) {
                 return 0;
             } else {
                 var cl = this.cache.categoryList;
-                for(var i in cl) {
-                    if(cl[i].category_id == cid) {
+                for (var i in cl) {
+                    if (cl[i].category_id == cid) {
                         return cl[i].parent_id;
                     }
                 }
             }
         },
-        get_category_trace: function( cid ) {
+        get_category_trace: function(cid) {
             var trace = "";
-            while(cid != 0) {
+            while (cid != 0) {
                 trace = this.get_category_name(cid) + (trace != "" ? " > " + trace : trace);
 
                 cid = this.get_category_parent(cid);
