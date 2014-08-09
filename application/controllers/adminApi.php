@@ -300,8 +300,10 @@ class AdminApi extends CI_Controller {
         $contactAddressListStr = '';
         $contactAddressList = $this->configmodel->get_custom_group('contact');
 
-        foreach($contactAddressList as $contactAddress) {
-            $contactAddressListStr = $contactAddressListStr.($contactAddressListStr == '' ? '' : '||').$contactAddress['custom_key'].':'.$contactAddress['custom_value'];
+        if(count($contactAddressList) > 0) {
+            foreach($contactAddressList as $contactAddress) {
+                $contactAddressListStr = $contactAddressListStr.($contactAddressListStr == '' ? '' : '?').$contactAddress['custom_key'].':'.$contactAddress['custom_value'];
+            }
         }
 
         echo json_encode(array(
@@ -314,7 +316,8 @@ class AdminApi extends CI_Controller {
         $this->load->model('configmodel');
 
         $contactAddressListStr = $this->input->get('contactList');
-        $contactAddressList = $contactAddressListStr != null ? preg_split('/\|\|/', $contactAddressListStr) : array();
+        //echo $contactAddressListStr;
+        $contactAddressList = $contactAddressListStr != null ? preg_split('/\?/', $contactAddressListStr) : array();
 
         $contactAddressArray = array();
         foreach($contactAddressList as $contactAddress) {

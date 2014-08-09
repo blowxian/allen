@@ -203,13 +203,13 @@ $(document).ready(function() {
                     }
                 });
         },
-        delete_contact: function( contactID ) {
+        delete_contact: function(contactID) {
             $('#manage-contact-container').mask('正在删除...');
             $.ajax({
                 type: "GET",
                 url: "http://" + window.location.host + "/adminApi/delete_contact",
                 data: {
-                    'contactID': contactID, 
+                    'contactID': contactID,
                     t: new Date().getTime()
                 },
                 dataType: 'json'
@@ -244,6 +244,7 @@ $(document).ready(function() {
                     switch (~~json.ret) {
                         case 0:
                             manageHome.fetch_contact_list();
+                            manageHome.reset_contact_form();
                             break;
                         default:
                             alert('添加地址失败！错误码：' + json.ret);
@@ -275,32 +276,32 @@ $(document).ready(function() {
                     }
                 });
         },
-        process_contact_data: function( stringData ) {
-            var contactStringList = stringData.split('||'),
+        process_contact_data: function(stringData) {
+            var contactStringList = stringData != "" ? stringData.split('?') : [],
                 contactList = [];
 
-            for(var i = 0; i < contactStringList.length; i++) {
+            for (var i = 0; i < contactStringList.length; i++) {
                 var contactPair = contactStringList[i].split(':'),
                     contactDetail = contactPair[1].split('|');
 
                 contactList[i] = {
                     id: contactPair[0],
-                    title: decodeURIComponent(contactDetail[8]),
-                    addr: decodeURIComponent(contactDetail[0]),
-                    phone: decodeURIComponent(contactDetail[1]),
-                    mobile: decodeURIComponent(contactDetail[2]),
-                    fax: decodeURIComponent(contactDetail[3]),
-                    postcode: decodeURIComponent(contactDetail[4]),
-                    email: decodeURIComponent(contactDetail[5]),
-                    site: decodeURIComponent(contactDetail[6]),
-                    lang: decodeURIComponent(contactDetail[7]),
+                    title: decodeURIComponent(contactDetail[8] ? contactDetail[8] : ''),
+                    addr: decodeURIComponent(contactDetail[0] ? contactDetail[0] : ''),
+                    phone: decodeURIComponent(contactDetail[1] ? contactDetail[1] : ''),
+                    mobile: decodeURIComponent(contactDetail[2] ? contactDetail[2] : ''),
+                    fax: decodeURIComponent(contactDetail[3] ? contactDetail[3] : ''),
+                    postcode: decodeURIComponent(contactDetail[4] ? contactDetail[4] : ''),
+                    email: decodeURIComponent(contactDetail[5] ? contactDetail[5] : ''),
+                    site: decodeURIComponent(contactDetail[6] ? contactDetail[6] : ''),
+                    lang: decodeURIComponent(contactDetail[7] ? contactDetail[7] : ''),
                     raw: contactPair[1]
                 };
             }
 
             return contactList;
         },
-        render_contact_list: function( contactList ) {
+        render_contact_list: function(contactList) {
             $('#contact-list tbody').html(tmpl($('#contact-list-tmpl').html(), {
                 'contactList': contactList
             }));
@@ -322,21 +323,23 @@ $(document).ready(function() {
         edit_contact: function(id, raw) {
             var contactDetail = raw.split('|');
 
-            $('#edit-contact-wrap input[name=contact-title]').val(decodeURIComponent(contactDetail[8]));
-            $('#edit-contact-wrap input[name=contact-addr]').val(decodeURIComponent(contactDetail[0]));
-            $('#edit-contact-wrap input[name=contact-phone]').val(decodeURIComponent(contactDetail[1]));
-            $('#edit-contact-wrap input[name=contact-mobile]').val(decodeURIComponent(contactDetail[2]));
-            $('#edit-contact-wrap input[name=contact-fax]').val(decodeURIComponent(contactDetail[3]));
-            $('#edit-contact-wrap input[name=contact-postcode]').val(decodeURIComponent(contactDetail[4]));
-            $('#edit-contact-wrap input[name=contact-email]').val(decodeURIComponent(contactDetail[5]));
-            $('#edit-contact-wrap input[name=contact-site]').val(decodeURIComponent(contactDetail[6]));
+            $('#edit-contact-wrap input[name=contact-title]').val(decodeURIComponent(contactDetail[8] ? contactDetail[8] : ''));
+            $('#edit-contact-wrap input[name=contact-addr]').val(decodeURIComponent(contactDetail[0] ? contactDetail[0] : ''));
+            $('#edit-contact-wrap input[name=contact-phone]').val(decodeURIComponent(contactDetail[1] ? contactDetail[1] : ''));
+            $('#edit-contact-wrap input[name=contact-mobile]').val(decodeURIComponent(contactDetail[2] ? contactDetail[2] : ''));
+            $('#edit-contact-wrap input[name=contact-fax]').val(decodeURIComponent(contactDetail[3] ? contactDetail[3] : ''));
+            $('#edit-contact-wrap input[name=contact-postcode]').val(decodeURIComponent(contactDetail[4] ? contactDetail[4] : ''));
+            $('#edit-contact-wrap input[name=contact-email]').val(decodeURIComponent(contactDetail[5] ? contactDetail[5] : ''));
+            $('#edit-contact-wrap input[name=contact-site]').val(decodeURIComponent(contactDetail[6] ? contactDetail[6] : ''));
             this.render_lang_switch(contactDetail[7]);
 
             $('#manage-contact-container button[data-action=add-contact]').hide();
             $('#manage-contact-container button[data-action=update-contact]').data('contact-id', id);
             $('#manage-contact-container button[data-action=update-contact]').show();
 
-            $('html,body').animate({scrollTop: $('#manage-contact').offset().top},'slow');
+            $('html,body').animate({
+                scrollTop: $('#manage-contact').offset().top
+            }, 'slow');
         },
         bind_event: function() {
             var that = this,
