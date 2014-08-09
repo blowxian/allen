@@ -1075,6 +1075,7 @@ $(document).ready(function() {
                     name: '管理商品',
                     func: function() {
                         manageProduct.init_product_search_tab();
+                        $('#keyword').val('');
                     }
                 },
                 'addProduct': {
@@ -1083,6 +1084,7 @@ $(document).ready(function() {
                     func: function() {
                         $('#create-product-button').show();
                         $('#update-modified-product-button').hide();
+                        manageProduct.reset_product_form();
                     }
                 },
                 'modifyProduct': {
@@ -1554,6 +1556,29 @@ $(document).ready(function() {
                             break;
                     }
                 });
+        },
+        reset_product_form: function() {
+            $('#product-name').val('');
+            $('#product-no').val('');
+            $('#product-price').val('');
+            $('#product-moq').val('');
+            $('#product-material').val('');
+            $('#product-image-url').val('');
+            $('#product-small-image-url').val('');
+            $('#selected-category-trace').val('');
+            $('#selected-category-id').val('');
+
+            $('img[data-role=preview-image]').attr('src', '');
+            $('img[data-role=preview-image]').attr('src', '');
+            Holder.run();
+
+            $('#product-spec tbody').html('\
+                        <tr>\
+                            <td><input class="form-control input-sm product-spec-item" type="text"></td>\
+                            <td><input class="form-control input-sm product-spec-item" type="text"></td>\
+                            <td><input class="form-control input-sm product-spec-item" type="text"></td>\
+                            <td><span class="glyphicon glyphicon-remove-circle" style="visibility: hidden"></span></td>\
+                        </tr>');
         },
         bind_event: function() {
             var that = this;

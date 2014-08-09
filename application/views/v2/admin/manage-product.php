@@ -119,8 +119,8 @@
 
                     <div id="upload-product-image-wrap" class="upload-product-image-wrap">
                         <div id="product-image-wrap">
-                            <img data-src="holder.js/500x500" class="img-rounded img-preview" alt="500x500" style="width: 500px; height: 500px;">
-                            <img data-src="holder.js/200x200" class="img-rounded img-preview" alt="140x140" style="width: 200px; height: 200px;">
+                            <img data-src="holder.js/500x500" class="img-rounded img-preview" data-role="preview-image" alt="500x500" style="width: 500px; height: 500px;">
+                            <img data-src="holder.js/200x200" class="img-rounded img-preview" data-role="preview-small-image" alt="140x140" style="width: 200px; height: 200px;">
                             <input type="hidden" id="product-image-url" name="product-image" value="" />
                             <input type="hidden" id="product-small-image-url" name="product-small-image" value="" />
                             <div class="loading-cover" id="cate-cover-loading" style="display: none"></div>
