@@ -294,6 +294,46 @@ class AdminApi extends CI_Controller {
         }
     }
 
+    function get_contact_list() {
+        $this->load->model('configmodel');
+
+        $contactAddressListStr = '';
+        $contactAddressList = $this->configmodel->get_custom_group('contact');
+
+        foreach($contactAddressList as $contactAddress) {
+            $contactAddressListStr = $contactAddressListStr.($contactAddressListStr == '' ? '' : '||').$contactAddress['custom_key'].':'.$contactAddress['custom_value'];
+        }
+
+        echo json_encode(array(
+            'ret' => '0',
+            'contactList' => $contactAddressListStr
+        ));
+    }
+
+    function update_contact_list() {
+        $this->load->model('configmodel');
+
+        $contactAddressListStr = $this->input->get('contactList');
+        $contactAddressList = $contactAddressListStr != null ? preg_split('/\|\|/', $contactAddressListStr) : array();
+
+        $contactAddressArray = array();
+        foreach($contactAddressList as $contactAddress) {
+            $contactAddressDetail = preg_split('/\:/', $contactAddress);
+
+            $contactAddressArray[$contactAddressDetail[0]] = $contactAddressDetail[1];
+        }
+
+        echo json_encode($this->configmodel->set_custom_group($contactAddressArray));
+    }
+
+    function delete_contact() {
+        $this->load->model('configmodel');
+
+        $contactID = $this->input->get('contactID');
+
+        echo json_encode($this->configmodel->del_custom($contactID));
+    }
+
     function convert_lang_to_flag( $lang ) {
         switch( $lang ) {
             case 'en':

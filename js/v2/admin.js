@@ -61,7 +61,12 @@ $(document).ready(function() {
                 'manageContact': {
                     dom: 'manage-contact',
                     name: '管理公司联系地址',
-                    func: function() {}
+                    func: function() {
+                        // 初始化语言选择器
+                        manageHome.init_lang_switch();
+
+                        manageHome.fetch_contact_list();
+                    }
                 }
             },
             langOption: {
@@ -95,6 +100,16 @@ $(document).ready(function() {
                     $('#' + menuList[i].dom).hide();
                 }
             }
+        },
+        init_lang_switch: function() {
+            this.render_lang_switch('cn')
+        },
+        render_lang_switch: function(curLang) {
+            this.cache.lang = curLang;
+            $('#lang-switch').html(tmpl($('#lang-switch-tmpl').html(), {
+                'curLang': curLang,
+                'langOption': this.conf.langOption
+            }));
         },
         fetch_slide_photo: function() {
             $('#slide-image-container').mask('正在加载...');
@@ -166,6 +181,163 @@ $(document).ready(function() {
                     }
                 });
         },
+        fetch_contact_list: function() {
+            $('#manage-contact-container').mask('正在加载...');
+            $.ajax({
+                type: "GET",
+                url: "http://" + window.location.host + "/adminApi/get_contact_list",
+                data: {
+                    t: new Date().getTime()
+                },
+                dataType: 'json'
+            })
+                .done(function(json) {
+                    $('#manage-contact-container').unmask();
+                    switch (~~json.ret) {
+                        case 0:
+                            manageHome.render_contact_list(manageHome.process_contact_data(json.contactList));
+                            break;
+                        default:
+                            alert('获取地址列表失败！错误码：' + json.ret);
+                            break;
+                    }
+                });
+        },
+        delete_contact: function( contactID ) {
+            $('#manage-contact-container').mask('正在删除...');
+            $.ajax({
+                type: "GET",
+                url: "http://" + window.location.host + "/adminApi/delete_contact",
+                data: {
+                    'contactID': contactID, 
+                    t: new Date().getTime()
+                },
+                dataType: 'json'
+            })
+                .done(function(json) {
+                    $('#manage-contact-container').unmask();
+                    switch (~~json.ret) {
+                        case 0:
+                            $('#contact-list tr[role-id=' + contactID + ']').next().next().remove();
+                            $('#contact-list tr[role-id=' + contactID + ']').next().remove();
+                            $('#contact-list tr[role-id=' + contactID + ']').remove();
+                            break;
+                        default:
+                            alert('删除地址失败！错误码：' + json.ret);
+                            break;
+                    }
+                });
+        },
+        add_contact: function() {
+            $('#manage-contact-container').mask('正在添加地址...');
+            $.ajax({
+                type: "GET",
+                url: "http://" + window.location.host + "/adminApi/update_contact_list",
+                data: {
+                    contactList: 'contact' + (new Date).getTime() + ':' + encodeURIComponent($('#edit-contact-wrap input[name=contact-addr]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-phone]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-mobile]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-fax]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-postcode]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-email]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-site]').val()) + '|' + encodeURIComponent(this.cache.lang) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-title]').val()),
+                    t: new Date().getTime()
+                },
+                dataType: 'json'
+            })
+                .done(function(json) {
+                    $('#manage-contact-container').unmask();
+                    switch (~~json.ret) {
+                        case 0:
+                            manageHome.fetch_contact_list();
+                            break;
+                        default:
+                            alert('添加地址失败！错误码：' + json.ret);
+                            break;
+                    }
+                });
+        },
+        update_contact: function(id) {
+            $('#manage-contact-container').mask('正在更新地址...');
+            $.ajax({
+                type: "GET",
+                url: "http://" + window.location.host + "/adminApi/update_contact_list",
+                data: {
+                    contactList: id + ':' + encodeURIComponent($('#edit-contact-wrap input[name=contact-addr]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-phone]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-mobile]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-fax]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-postcode]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-email]').val()) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-site]').val()) + '|' + encodeURIComponent(this.cache.lang) + '|' + encodeURIComponent($('#edit-contact-wrap input[name=contact-title]').val()),
+                    t: new Date().getTime()
+                },
+                dataType: 'json'
+            })
+                .done(function(json) {
+                    $('#manage-contact-container').unmask();
+                    switch (~~json.ret) {
+                        case 0:
+                            manageHome.fetch_contact_list();
+                            manageHome.reset_contact_form();
+                            break;
+                        default:
+                            alert('更新地址失败！错误码：' + json.ret);
+                            break;
+                    }
+                });
+        },
+        process_contact_data: function( stringData ) {
+            var contactStringList = stringData.split('||'),
+                contactList = [];
+
+            for(var i = 0; i < contactStringList.length; i++) {
+                var contactPair = contactStringList[i].split(':'),
+                    contactDetail = contactPair[1].split('|');
+
+                contactList[i] = {
+                    id: contactPair[0],
+                    title: decodeURIComponent(contactDetail[8]),
+                    addr: decodeURIComponent(contactDetail[0]),
+                    phone: decodeURIComponent(contactDetail[1]),
+                    mobile: decodeURIComponent(contactDetail[2]),
+                    fax: decodeURIComponent(contactDetail[3]),
+                    postcode: decodeURIComponent(contactDetail[4]),
+                    email: decodeURIComponent(contactDetail[5]),
+                    site: decodeURIComponent(contactDetail[6]),
+                    lang: decodeURIComponent(contactDetail[7]),
+                    raw: contactPair[1]
+                };
+            }
+
+            return contactList;
+        },
+        render_contact_list: function( contactList ) {
+            $('#contact-list tbody').html(tmpl($('#contact-list-tmpl').html(), {
+                'contactList': contactList
+            }));
+        },
+        reset_contact_form: function() {
+            $('#edit-contact-wrap input[name=contact-title]').val('');
+            $('#edit-contact-wrap input[name=contact-addr]').val('');
+            $('#edit-contact-wrap input[name=contact-phone]').val('');
+            $('#edit-contact-wrap input[name=contact-mobile]').val('');
+            $('#edit-contact-wrap input[name=contact-fax]').val('');
+            $('#edit-contact-wrap input[name=contact-postcode]').val('');
+            $('#edit-contact-wrap input[name=contact-email]').val('');
+            $('#edit-contact-wrap input[name=contact-site]').val('');
+            this.render_lang_switch('cn');
+
+            $('#manage-contact-container button[data-action=add-contact]').show();
+            $('#manage-contact-container button[data-action=update-contact]').hide();
+        },
+        edit_contact: function(id, raw) {
+            var contactDetail = raw.split('|');
+
+            $('#edit-contact-wrap input[name=contact-title]').val(decodeURIComponent(contactDetail[8]));
+            $('#edit-contact-wrap input[name=contact-addr]').val(decodeURIComponent(contactDetail[0]));
+            $('#edit-contact-wrap input[name=contact-phone]').val(decodeURIComponent(contactDetail[1]));
+            $('#edit-contact-wrap input[name=contact-mobile]').val(decodeURIComponent(contactDetail[2]));
+            $('#edit-contact-wrap input[name=contact-fax]').val(decodeURIComponent(contactDetail[3]));
+            $('#edit-contact-wrap input[name=contact-postcode]').val(decodeURIComponent(contactDetail[4]));
+            $('#edit-contact-wrap input[name=contact-email]').val(decodeURIComponent(contactDetail[5]));
+            $('#edit-contact-wrap input[name=contact-site]').val(decodeURIComponent(contactDetail[6]));
+            this.render_lang_switch(contactDetail[7]);
+
+            $('#manage-contact-container button[data-action=add-contact]').hide();
+            $('#manage-contact-container button[data-action=update-contact]').data('contact-id', id);
+            $('#manage-contact-container button[data-action=update-contact]').show();
+
+            $('html,body').animate({scrollTop: $('#manage-contact').offset().top},'slow');
+        },
         bind_event: function() {
             var that = this,
                 _container = $('#container');
@@ -175,6 +347,9 @@ $(document).ready(function() {
                 switch (action) {
                     case 'switch-tab':
                         that.render_sidebar($(e.target).attr('tabid'));
+                        break;
+                    case 'switch-lang':
+                        that.render_lang_switch($(e.target).attr('langid'));
                         break;
                     default:
                         break;
@@ -192,6 +367,20 @@ $(document).ready(function() {
                     case 'del-slide-photo':
                         that.del_slide_photo(e.target);
                         that.update_slide_photo_list();
+                        break;
+                    case 'add-contact':
+                        that.add_contact();
+                        break;
+                    case 'edit-contact':
+                        that.edit_contact($(e.target).data('contact-id'), $(e.target).data('raw'));
+                        break;
+                    case 'update-contact':
+                        that.update_contact($(e.target).data('contact-id'));
+                        break;
+                    case 'delete-contact':
+                        if (confirm('确定删除地址？')) {
+                            that.delete_contact($(e.target).data('contact-id'));
+                        }
                         break;
                     default:
                         break;

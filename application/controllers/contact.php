@@ -29,6 +29,33 @@ class Contact extends CI_Controller {
         $contact = $this->contactmodel->getAllContact( $lang );
         $data['contact'] = $contact;
 
+        //print_r(json_encode($data));
+
+        // get contact list (version 2)
+        $this->load->model('configmodel');
+        $contactStringList = $this->configmodel->get_custom_group('contact');
+
+        $contactList = array();
+
+        foreach($contactStringList as $contactString) {
+            $contactDetail = preg_split('/\|/', $contactString['custom_value']);
+            if($contactDetail[7] == $lang) {
+                array_push($contactList, array(
+                    "contact_id" => urldecode($contactString['custom_key']),
+                    "contact_city" => urldecode($contactDetail[8]),
+                    "contact_addr" => urldecode($contactDetail[0]),
+                    "contact_post" => urldecode($contactDetail[4]),
+                    "contact_tel" => urldecode($contactDetail[1]),
+                    "contact_mobile" => urldecode($contactDetail[2]),
+                    "contact_fax" => urldecode($contactDetail[3]),
+                    "contact_email" => urldecode($contactDetail[5]),
+                    "contact_site" => urldecode($contactDetail[6])
+                ));
+            }
+        }
+
+        $data['contact'] = $contactList;
+
         // load view
         $this->load->view( 'contact', $data );
     }

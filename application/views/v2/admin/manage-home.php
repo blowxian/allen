@@ -81,7 +81,7 @@
             <!-- S 首页Slide图片列表 -->
             <div class="bs-docs-section first" id="manage-home-pic" style="display: none;">
                 <div class="page-header">
-                    <h3 id="managenews">首页图片</h3>
+                    <h3>首页图片</h3>
                 </div>
 
                 <div id="slide-image-container">
@@ -125,13 +125,22 @@
                     <h3>公司联系地址</h3>
                 </div>
 
-                <div>
+                <div id="manage-contact-container">
                     <div class="well">
                         <div class="row" id="edit-contact-wrap">
                             <div class="col-md-12">
                                 <div class="input-group">
+                                    <span class="input-group-addon">标题</span>
+                                    <input type="text" name="contact-title" class="form-control" placeholder="请填写分公司名称">
+                                    <div class="input-group-btn" id="lang-switch"></div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-12">
+                                <div class="input-group">
                                     <span class="input-group-addon">地址</span>
-                                    <input type="text" class="form-control" placeholder="请填写公司地址">
+                                    <input type="text" name="contact-addr" class="form-control" placeholder="请填写公司地址">
                                 </div>
                             </div>
                             <br />
@@ -139,13 +148,13 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">邮编</span>
-                                    <input type="text" class="form-control" placeholder="请填写邮编">
+                                    <input type="text" name="contact-postcode" class="form-control" placeholder="请填写邮编">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">固定电话</span>
-                                    <input type="text" class="form-control" placeholder="请填写固定电话">
+                                    <input type="text" name="contact-phone" class="form-control" placeholder="请填写固定电话">
                                 </div>
                             </div>
                             <br />
@@ -153,13 +162,13 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">传真</span>
-                                    <input type="text" class="form-control" placeholder="请填写传真">
+                                    <input type="text" name="contact-fax" class="form-control" placeholder="请填写传真">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">移动电话</span>
-                                    <input type="text" class="form-control" placeholder="请填写移动电话">
+                                    <input type="text" name="contact-mobile" class="form-control" placeholder="请填写移动电话">
                                 </div>
                             </div>
                             <br />
@@ -167,21 +176,21 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">邮箱</span>
-                                    <input type="text" class="form-control" placeholder="请填写邮箱">
+                                    <input type="text" name="contact-email" class="form-control" placeholder="请填写邮箱">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">网址</span>
-                                    <input type="text" class="form-control" placeholder="请填写网址">
+                                    <input type="text" name="contact-site" class="form-control" placeholder="请填写网址">
                                 </div>
                             </div>
                         </div>
 
                         <br />
                         <div class="input-group pull-right">
-                            <button class="btn btn-primary" type="button" data-action="add-slide-photo">添加一条</button>
-                            <button class="btn btn-primary" type="button" data-action="add-slide-photo">更新地址</button>
+                            <button class="btn btn-primary" type="button" data-action="add-contact">添加一条</button>
+                            <button class="btn btn-warning" type="button" data-action="update-contact" style="display: none;">更新地址</button>
                         </div>
 
                         <div class="clearfix"></div>
@@ -191,69 +200,7 @@
 
                     <div class="row" id="contact-list">
                     <table class="table">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Username</th>
-                          <th>Username</th>
-                        </tr>
-                      </thead>
                       <tbody>
-                        <tr>
-                          <td rowspan="3">1</td>
-                          <td colspan="3">Chengxi Industry Distract, Yiwu, Zhejiang, China</td>
-                          <td rowspan="3">
-                            <button class="btn btn-primary" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">编辑</button>
-                            <br />
-                            <button class="btn btn-danger" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">删除</button>
-                            </td>
-                        </tr>
-                        <tr>
-                          <td>+86-579-85899138</td>
-                          <td>+86-13958418002</td>
-                          <td>+86-579-85899355</td>
-                        </tr>
-                        <tr>
-                          <td>322000</td>
-                          <td>taihepacking@aliyun.com</td>
-                          <td>http://www.taihepacking.com</td>
-                        </tr>
-                        <tr>
-                          <td rowspan="3">2</td>
-                          <td colspan="3">Chengxi Industry Distract, Yiwu, Zhejiang, China</td>
-                          <td rowspan="3">
-                            <button class="btn btn-primary" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">编辑</button>
-                            </td>
-                        </tr>
-                        <tr>
-                          <td>+86-579-85899138</td>
-                          <td>+86-13958418002</td>
-                          <td>+86-579-85899355</td>
-                        </tr>
-                        <tr>
-                          <td>322000</td>
-                          <td>taihepacking@aliyun.com</td>
-                          <td>http://www.taihepacking.com</td>
-                        </tr>
-                        <tr>
-                          <td rowspan="3">3</td>
-                          <td colspan="3">Chengxi Industry Distract, Yiwu, Zhejiang, China</td>
-                          <td rowspan="3">
-                            <button class="btn btn-primary" type="button" data-action="add-slide-photo" style="display:block;margin:0 auto;">编辑</button>
-                            </td>
-                        </tr>
-                        <tr>
-                          <td>+86-579-85899138</td>
-                          <td>+86-13958418002</td>
-                          <td>+86-579-85899355</td>
-                        </tr>
-                        <tr>
-                          <td>322000</td>
-                          <td>taihepacking@aliyun.com</td>
-                          <td>http://www.taihepacking.com</td>
-                        </tr>
                       </tbody>
                     </table>
                     </div>
@@ -276,6 +223,17 @@
     <%}%>
 </script>
 
+<script type="text/html" id="lang-switch-tmpl">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><%=langOption[curLang]%> <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <%for(var i in langOption) {
+            if(i != curLang) {%>
+        <li><a href="#" action="switch-lang" langid="<%=i%>"><%=langOption[i]%></a></li>
+        <%  }
+        }%>
+    </ul>
+</script>
+
 <script type="text/html" id="slide-photo-tmpl">
     <div class="slide-photo col-sm-6 col-md-12">
         <div class="thumbnail row">
@@ -291,6 +249,33 @@
             </div>
         </div>
     </div>
+</script>
+
+<script type="text/html" id="contact-list-tmpl">
+    <%for(var i = 0; i < contactList.length; i++) {%>
+    <tr class="contact-item" role-id="<%=contactList[i].id%>">
+      <td rowspan="4"><%=i + 1%>(<%=contactList[i].lang == 'cn' ? '中' : '英'%>)</td>
+      <td colspan="3">标题：<%=contactList[i].title%></td>
+      <td rowspan="4">
+        <button class="btn btn-primary" type="button" data-action="edit-contact" data-contact-id="<%=contactList[i].id%>" data-raw="<%=contactList[i].raw%>" style="display:block;margin:0 auto;">编辑</button>
+        <br />
+        <button class="btn btn-danger" type="button" data-action="delete-contact" data-contact-id="<%=contactList[i].id%>" style="display:block;margin:0 auto;">删除</button>
+        </td>
+    </tr>
+    <tr>
+      <td colspan="3">地址：<%=contactList[i].addr%></td>
+    </tr>
+    <tr>
+      <td>固话：<%=contactList[i].phone%></td>
+      <td>手机：<%=contactList[i].mobile%></td>
+      <td>传真：<%=contactList[i].fax%></td>
+    </tr>
+    <tr>
+      <td>邮编：<%=contactList[i].postcode%></td>
+      <td>邮箱：<%=contactList[i].email%></td>
+      <td>网址：<%=contactList[i].site%></td>
+    </tr>
+    <%}%>
 </script>
 
 <!-- Core JavaScript -->
