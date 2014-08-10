@@ -279,3 +279,7 @@
 #slide-photo-list .slide-photo .caption {
     line-height: 80px;
 }
+
+#contact-list .contact-item {
+    border-top: 2px #000 solid;
+}
