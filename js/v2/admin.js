@@ -1637,10 +1637,15 @@ $(document).ready(function() {
 
             // 上传封面图片
             $("#submit-product-image").on('click', function() {
-                $('#upload-product-image-wrap').mask('正在上传类目封面...');
-                $("#imageform").ajaxForm({
-                    target: '#product-image-wrap'
-                }).submit();
+                // 检查是否已填入图片名
+                if ($('#upload-product-image').val() !== "") {
+                    $('#upload-product-image-wrap').mask('正在上传类目封面...');
+                    $("#imageform").ajaxForm({
+                        target: '#product-image-wrap'
+                    }).submit();
+                } else {
+                    alert("您未选择图片文件，请先选择图片文件！");
+                }
             });
 
             // 展开类目选择器
