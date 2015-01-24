@@ -7,3 +7,11 @@ img/slide/
 img/refl_*
 phpinfo.php
 sftp-config.json
+
+lison_github_rsa
+
+lison_github_rsa.pub
+
+lixin_rsa
+
+lixin_rsa.pub
